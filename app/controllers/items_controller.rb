@@ -71,7 +71,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.email == current_user.email && @item.update_attributes(params[:item]) 
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
+        format.html { redirect_to @item }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
