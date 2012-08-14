@@ -5,12 +5,12 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-     @items = Item.all
+    # @items = Item.all
 
     @current_user = current_user
 
    
-   # @items = Item.find_all_by_email(@current_user.email)
+    @items = Item.find_all_by_email(@current_user.email)
 
 
 
