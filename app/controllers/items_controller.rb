@@ -1,11 +1,18 @@
 class ItemsController < ApplicationController
+
+  before_filter :authenticate_user!
+
   # GET /items
   # GET /items.json
-
-before_filter :authenticate_user!, :except => [:index, :show]
-
   def index
-    @items = Item.all
+     @items = Item.all
+
+    @current_user = current_user
+
+   
+   # @items = Item.find_all_by_email(@current_user.email)
+
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,6 +35,7 @@ before_filter :authenticate_user!, :except => [:index, :show]
   # GET /items/new.json
   def new
     @item = Item.new
+    @user = User.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,11 +54,11 @@ before_filter :authenticate_user!, :except => [:index, :show]
     @item = Item.new(params[:item])
 
     respond_to do |format|
-      if @item.save
+      if @item.email == current_user.email && @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render json: @item, status: :created, location: @item }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", notice: 'Item failed.' }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
@@ -62,7 +70,7 @@ before_filter :authenticate_user!, :except => [:index, :show]
     @item = Item.find(params[:id])
 
     respond_to do |format|
-      if @item.update_attributes(params[:item])
+      if @item.email == current_user.email && @item.update_attributes(params[:item]) 
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
         format.json { head :no_content }
       else

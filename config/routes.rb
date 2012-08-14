@@ -11,6 +11,10 @@ ListWebsite::Application.routes.draw do
   #match 'list', :to => 'list_core#list'
 
    match 'list', :to => 'items#index'
+
+  resources :users do
+    resources :items
+  end
 end
 
   # The priority is based upon order of creation:

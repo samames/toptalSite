@@ -1,4 +1,4 @@
-<h1>Listing items</h1>
+<h1>Listing items for <%= @current_user.email %></h1>
 
 <table>
   <tr>
@@ -6,17 +6,19 @@
     <th>Date</th>
     <th>Priority</th>
     <th>Description</th>
+    <th>Email</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @items.each do |item| %>
+<% for item in @items %>
   <tr>
     <td><%= item.title %></td>
     <td><%= item.date %></td>
     <td><%= item.priority %></td>
     <td><%= item.description %></td>
+    <td><%= item.email %></td>
     <td><%= link_to 'Show', item %></td>
     <td><%= link_to 'Edit', edit_item_path(item) %></td>
     <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
